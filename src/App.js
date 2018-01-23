@@ -7,6 +7,7 @@ class Board extends Component {
     this.state = {
       board: this.getBoard(),
       SHIP: 1,
+      shots: 0,
     }
     for(let i = 0;i < 5; i++){
       this.putShip()
@@ -19,7 +20,7 @@ class Board extends Component {
     for(let i = 0;i < 10; i++){
       // create single cell with id of coordinates
       // 0-0   3-5
-      row.push(<td id={i + '-' +rowNumber}></td>);
+      row.push(<td onClick={this.handleClick.bind(this)} id={i + '-' +rowNumber}></td>);
     }
     return row;
   }
@@ -30,6 +31,14 @@ class Board extends Component {
       newBoard.push(<tr>{this.renderRow(i)}</tr>)
     }
     return newBoard;
+  }
+
+  handleClick() {
+    let newShots = this.state.shots + 1;
+    this.setState({shots: newShots})
+
+    console.log("click")
+    console.log(newShots);
   }
 
   //and places 5 single length ships.
