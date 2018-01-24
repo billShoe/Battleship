@@ -12,3 +12,19 @@ td {
 td:hover {
   background-color: green;
 }
+
+td.ship {
+  background-color: purple;
+}
+
+td.miss {
+  background-color: blue;
+}
+
+td.hit {
+  background-color: red;
+}
+
+span.shotCount {
+  color: red;
+}
