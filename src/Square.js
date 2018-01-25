@@ -1,10 +1,7 @@
 import React, { Component } from 'react'
-import { EMPTY, SHIP, HIT, MISS, SHOWSHIPS } from './Board'
+import { SHIP, HIT, MISS, SHOWSHIPS } from './Board'
 
 class Square extends Component {
-  constructor(props) {
-    super(props)
-  }
 
   render() {
     const { status } = this.props
@@ -33,6 +30,5 @@ class Square extends Component {
       <td {...this.props} className={className} ></td>
     );
   }
-
 }
 export default Square;

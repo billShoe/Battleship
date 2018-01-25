@@ -25,7 +25,6 @@ class Board extends Component {
 
   //creates a board with however many squares we pass to the function
     getBoard(boardSize) {
-      console.log(boardSize);
       let board = []
       //Create an array of arrays
       for (let row = 0 ; row < boardSize; row++) {
@@ -84,12 +83,6 @@ class Board extends Component {
   handleClick(row, col) {
     let { board, shots, msg } = this.state
 
-    if (shots < 0) {
-      msg = "YOU LOSE"
-      shots = 0
-      board = this.renderGameOver(board)
-    }
-
     if (board[row][col] === 0) {
       board[row][col] = MISS;
       shots--;
@@ -98,6 +91,12 @@ class Board extends Component {
       board[row][col] = HIT;
       shots--;
       msg = this.checkWin(board, HIT)
+    }
+
+    if (shots < 0) {
+      msg = "YOU LOSE"
+      shots = 0
+      board = this.renderGameOver(board)
     }
 
     this.setState({
@@ -128,16 +127,12 @@ class Board extends Component {
   putShip(shipSize){
     var newBoard = this.state.board;
     var ranNum = Math.floor(Math.random() * 2)  // 1 for horizontal
-    // console.log("---putShip called      1 ---");
-    // if(newBoard[x][y] === 1) {
-    //   this.putShip()
-    // } else {
-      if (ranNum === 1) {
-        this.setState({board: this.putHoriz(newBoard, shipSize)})
-      } else {
-        this.setState({board: this.putVertical(newBoard, shipSize)})
-      }
-    // }
+
+    if (ranNum === 1) {
+      this.setState({board: this.putHoriz(newBoard, shipSize)})
+    } else {
+      this.setState({board: this.putVertical(newBoard, shipSize)})
+    }
   }
 
   // places ship horizontally
@@ -145,7 +140,6 @@ class Board extends Component {
   putHoriz(newBoard, shipSize){
     let findPlace = true;
     //ship is always placed in bounds of the board
-    // console.log("HORIZ ATTEMPT          2 ");
     while (findPlace){  //While true, will get random position
       var pos = this.getPos()
       var x = pos[0]
@@ -166,11 +160,9 @@ class Board extends Component {
       // Will only place a ship when valid number of spaces is equal to the length of the ship being placed.
       if (placeShip === shipSize){
         for (let iter = 0; iter < shipSize; iter++ ) {
-          // console.log("####SHIP PLACED####   3  ||", (x + iter), y);
           newBoard[x + iter][y] = SHIP;
         }
         findPlace = false
-        // console.log(newBoard);
         return newBoard;
       }
     }
@@ -198,7 +190,6 @@ class Board extends Component {
       }
       if (placeShip === shipSize){
         for (let iter = 0; iter < shipSize; iter++ ) {
-          // console.log("$$$$SHIP PLACED$$$$   3  ||", x, (y + iter));
           newBoard[x][y + iter] = SHIP;
         }
         findPlace = false

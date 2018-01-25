@@ -1,3 +1,7 @@
+body{
+  background-color: #efebdc;
+}
+
 table {
   border-collapse: collapse;
 }
@@ -9,8 +13,15 @@ td {
   padding: 0 0 0 0;
 }
 
-td:hover {
-  background-color: green;
+td.blank:hover {
+  background-image: url("https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Bomb_icon.svg/2000px-Bomb_icon.svg.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+td.blank {
+  background-color: lightBlue;
 }
 
 td.ship {
@@ -18,11 +29,20 @@ td.ship {
 }
 
 td.miss {
-  background-color: blue;
+  background-color: lightBlue;
+  background-image: url("https://orig00.deviantart.net/8cc7/f/2012/148/c/4/water_splash_png_by_starlaa1-d51fse4.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 td.hit {
   background-color: red;
+  background-image: url("http://hddfhm.com/images/clipart-comics-8.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+
 }
 
 td.show {
