@@ -22,6 +22,11 @@ table {
   height: 600px;
 }
 
+.dropDown {
+  height: 30px;
+  width: 200px;
+}
+
 td {
   border: 1px solid black;
   padding: 0 0 0 0;
@@ -85,7 +90,7 @@ div.table {
   padding: 5px;
   width: 200px;
   transition: all 0.5s;
-  cursor: pointer;
+  cursor: text;
   margin: 5px;
 }
 

@@ -47,13 +47,13 @@ class App extends Component {
             <div>
             <form onSubmit={this.handleSubmit.bind(this)}>
               <label>
-                Name:
+                Name:&nbsp;
                 <input type="text" value={this.state.name} onChange={this.handleChange.bind(this)} className="inputName"/>
               </label>
               <br />
               <br />
               <label>
-                Board size:
+                Board size:&nbsp;
                 <select name="size" onChange={this.getSize.bind(this)} className="dropDown">
                   <option value="10">-Select Size-</option>
                   <option value="10">10</option>
