@@ -19,19 +19,37 @@ class Board extends Component {
     this.state = {
       board: this.getBoard(boardSize),
       shots: maxShots,
-      message: 'Take the shot!!!'
+      msg: 'Take the shot!!!'
     }
   }
 
   //creates a board with however many squares we pass to the function
     getBoard(boardSize) {
       let board = []
-      //Create an array of arrays
+      let shipList = [2,3,3,4,5]
+      //Create an array of arrays for an empty board
       for (let row = 0 ; row < boardSize; row++) {
         board[row] = []
         for (let col = 0 ; col < boardSize; col++) {
           board[row][col] = EMPTY
         }
+      }
+      //places five ships on the board
+      for (let ship = 0 ; ship < 5 ; ship++) {
+        board = this.putShip(board, shipList[ship])
+      }
+      return board;
+    }
+
+    // places a ship on a random valid coordinate
+    // chooses between horizontal or vertical placement randomly
+    putShip(board, shipSize){
+      var ranNum = Math.floor(Math.random() * 2)  // 1 for horizontal
+
+      if (ranNum === 1) {
+        board= this.putHoriz(board, shipSize)
+      } else {
+        board= this.putVertical(board, shipSize)
       }
       return board;
     }
@@ -72,7 +90,6 @@ class Board extends Component {
         }
       }
     }
-
     return board;
   }
 
@@ -83,17 +100,17 @@ class Board extends Component {
   handleClick(row, col) {
     let { board, shots, msg } = this.state
 
-    if (board[row][col] === 0) {
+    if (board[row][col] === EMPTY) {
       board[row][col] = MISS;
       shots--;
       msg = this.checkWin(board, MISS);
-    } else if (board[row][col] === 1) {
+    } else if (board[row][col] === SHIP) {
       board[row][col] = HIT;
       shots--;
       msg = this.checkWin(board, HIT)
     }
 
-    if (shots < 0) {
+    if (shots < 1) {
       msg = "YOU LOSE"
       shots = 0
       board = this.renderGameOver(board)
@@ -102,37 +119,15 @@ class Board extends Component {
     this.setState({
       board: board,
       shots: shots,
-      message: msg,
+      msg: msg,
     })
-  }
-
-  // starts each game with 5 randomly placed ships
-  componentWillMount(){
-    // can I refactor this to a .map()?
-    let shipList = [2,3,3,4,5]
-    for (let iter = 0 ; iter < 5 ; iter++) {
-      this.putShip(shipList[iter])
-    }
   }
 
   //gets a random coordinate on the grid
   getPos(){
-    var x = Math.floor(Math.random() * 10);     // random number between 0 - 9
-    var y = Math.floor(Math.random() * 10);
+    var x = Math.floor(Math.random() * this.props.boardSize);     // random number between 0 - 9
+    var y = Math.floor(Math.random() * this.props.boardSize);
     return([x, y])
-  }
-
-  // places a ship on a random valid coordinate
-  // chooses between horizontal or vertical placement randomly
-  putShip(shipSize){
-    var newBoard = this.state.board;
-    var ranNum = Math.floor(Math.random() * 2)  // 1 for horizontal
-
-    if (ranNum === 1) {
-      this.setState({board: this.putHoriz(newBoard, shipSize)})
-    } else {
-      this.setState({board: this.putVertical(newBoard, shipSize)})
-    }
   }
 
   // places ship horizontally
@@ -183,11 +178,13 @@ class Board extends Component {
       if (y + shipSize > this.props.boardSize) {
         y -= shipSize
       }
+
       for (let iter = 0; iter < shipSize; iter++ ) {
         if (newBoard[x][y + iter] === EMPTY) {
           placeShip++;
         }
       }
+
       if (placeShip === shipSize){
         for (let iter = 0; iter < shipSize; iter++ ) {
           newBoard[x][y + iter] = SHIP;
@@ -221,23 +218,32 @@ class Board extends Component {
   }
 
   newGame(e) {
-    e.preventDefault();
-    window.location.reload();
+    let { boardSize, maxShots } = this.props
+
+    this.setState({
+                    board: this.getBoard(boardSize),
+                    shots: maxShots,
+                    msg: "Take the shot!"
+    })
   }
 
   render() {
     return (
-      <div>
-        <div className = "table">
+      <div className="main">
+        <div className="table">
           <table>
             <tbody>
               { this.renderRows() }
             </tbody>
           </table>
         </div>
-        <h1 className="msg">{this.state.message}</h1>
-        <span className="shotCount">{this.state.shots}</span> shots left
-        <button onClick={this.newGame} >New game!</button>
+        <h1 className="msg">{this.state.msg}</h1>
+        <span className="shotCount">&nbsp;{this.state.shots}</span>&nbsp;shots left
+        <br />
+        <button
+              onClick={this.newGame.bind(this)}
+              className="button"
+              >New game!</button>
       </div>
     );
   }

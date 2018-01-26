@@ -12,12 +12,17 @@ class App extends Component {
     super(props)
     this.state={
       name: 'Input Name',
+      boardSize: 10,
       redirect: false
     }
   }
 
   handleChange(e){
     this.setState({name: e.target.value})
+  }
+
+  getSize(e){
+    this.setState({boardSize: e.target.value})
   }
 
   handleSubmit(e){
@@ -36,16 +41,29 @@ class App extends Component {
 //Button for username input and redirect once on board
     return(
       <Router>
-        <div>
+        <div className="homePage">
 
           <Route exact path="/" render={props => (
             <div>
             <form onSubmit={this.handleSubmit.bind(this)}>
               <label>
                 Name:
-                <input type="text" value={this.state.name} onChange={this.handleChange.bind(this)} />
+                <input type="text" value={this.state.name} onChange={this.handleChange.bind(this)} className="inputName"/>
               </label>
-              <input type="submit" value="Submit" />
+              <br />
+              <br />
+              <label>
+                Board size:
+                <select name="size" onChange={this.getSize.bind(this)} className="dropDown">
+                  <option value="10">-Select Size-</option>
+                  <option value="10">10</option>
+                  <option value="15">15</option>
+                  <option value="20">20</option>
+                </select>
+              </label>
+              <br />
+              <br />
+              <input type="submit" value="Start Game!" className="button"/>
             </form>
             { redirect && (<Redirect to='/board'/>) }
             </div>
@@ -53,9 +71,13 @@ class App extends Component {
 
           <Route exact path="/board" render={props => (
             <div>
-              <h1>{name}'s Game</h1>
-              <Board boardSize={10} maxShots={50} />
-              <button onClick={this.newUser.bind(this)}>Home</button>
+              <h1>{name}&rsquo;s Game</h1>
+              <Board boardSize={this.state.boardSize} maxShots={5} />
+              <button
+                    className="button"
+                    onClick={this.newUser.bind(this)}
+                    ><span>Home</span></button>
+
               { !redirect && (<Redirect to='/'/>) }
             </div>
           )} />
