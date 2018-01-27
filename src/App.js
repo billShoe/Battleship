@@ -11,9 +11,10 @@ class App extends Component {
   constructor(props){
     super(props)
     this.state={
-      name: 'Input Name',
+      name: 'Guest',
       boardSize: 10,
-      redirect: false
+      redirect: false,
+      shots: 50
     }
   }
 
@@ -23,6 +24,10 @@ class App extends Component {
 
   getSize(e){
     this.setState({boardSize: e.target.value})
+  }
+
+  getShots(e){
+    this.setState({shots: e.target.value})
   }
 
   handleSubmit(e){
@@ -63,6 +68,17 @@ class App extends Component {
               </label>
               <br />
               <br />
+              <label>
+                Difficulty:&nbsp;
+                <select name="size" onChange={this.getShots.bind(this)} className="dropDown">
+                  <option value="10">-Select Difficulty-</option>
+                  <option value="75">Easy</option>
+                  <option value="50">Normal</option>
+                  <option value="25">Hard</option>
+                </select>
+              </label>
+              <br />
+              <br />
               <input type="submit" value="Start Game!" className="button"/>
             </form>
             { redirect && (<Redirect to='/board'/>) }
@@ -72,7 +88,9 @@ class App extends Component {
           <Route exact path="/board" render={props => (
             <div>
               <h1>{name}&rsquo;s Game</h1>
-              <Board boardSize={this.state.boardSize} maxShots={5} />
+              <Board
+                    boardSize={this.state.boardSize}
+                    maxShots={this.state.shots} />
               <button
                     className="button"
                     onClick={this.newUser.bind(this)}

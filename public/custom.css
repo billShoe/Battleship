@@ -17,6 +17,13 @@ table {
   height: 100%;
 }
 
+.main{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
 .table {
   width: 600px;
   height: 600px;
@@ -70,12 +77,6 @@ td.show {
 
 span.shotCount {
   color: red;
-}
-
-div.table {
-  padding: 10px 20% 0px 10%;
-  text-align:center;
-    margin-left:23%;
 }
 
 .inputName {

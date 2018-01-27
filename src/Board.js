@@ -229,13 +229,15 @@ class Board extends Component {
 
   render() {
     return (
-      <div className="main">
-        <div className="table">
-          <table>
-            <tbody>
-              { this.renderRows() }
-            </tbody>
-          </table>
+      <div>
+        <div className="main">
+          <div className="table">
+            <table>
+              <tbody>
+                { this.renderRows() }
+              </tbody>
+            </table>
+          </div>
         </div>
         <h1 className="msg">{this.state.msg}</h1>
         <span className="shotCount">&nbsp;{this.state.shots}</span>&nbsp;shots left
